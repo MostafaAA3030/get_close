@@ -1,0 +1,28 @@
+{
+  "name": "3-JWT",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "devStart": "nodemon server-b.js",
+    "devStartAuth": "nodemon authServer.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^4.0.1",
+    "cookie": "^0.4.1",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.2",
+    "express": "^4.17.1",
+    "express-validator": "^6.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "mariadb": "^2.3.1",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  }
+}

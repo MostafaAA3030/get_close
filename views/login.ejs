@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf8">
+  <title>Web Dev - login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+  <div class="row">
+    <h1 class="col-12 title">Web Dev</h1>
+  </div>
+  <div class="row">
+    <h2 class="col-8 register-title">
+      Login
+    </h2>
+    <form method="POST" class="col-8 auth-form" id="login_form">
+      <label for="email" class="col-12 labels">Email: </label>
+      <input type="email" id="email" name="email" 
+      class="col-8 register-inputs">
+      <label for="password" class="col-12 labels">Password: </label>
+      <input type="password" id="password" name="password" 
+      class="col-8 register-inputs">
+      <button type="submit" class="col-2 register-btn">Login
+      </button>
+    </form>
+    <div class="col-12" id="server_demo">
+    </div>
+  </div>
+  <div class="row">
+    <p class="col-12 footer">Made by mostafa@aminbros.com</p>
+  </div>
+  <script src="/scripts/login.js"></script>
+</body>
+</html>

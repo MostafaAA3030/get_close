@@ -1,0 +1,20 @@
+<h1>Send (get request) to ('/posts') with authentication header</h1>
+<input type="text" id="token" name="token" placeholder="Token">
+<button onclick="sendRequest();">Send</button>
+<script>
+function sendRequest() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if(this.readyState == 4 && this.status == 200) {
+      document.getElementById("demo").innerHTML = this.responseText; 
+    }
+  }
+  var token = document.getElementById("token").value;
+  
+  xhttp.open('GET', 'http://localhost:4000/posts', true);
+  xhttp.setRequestHeader("Authorization", "Bearer " + token);
+  xhttp.setRequestHeader("Content-type", "application/json");
+  xhttp.send();
+}
+</script>  
+
