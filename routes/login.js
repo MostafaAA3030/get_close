@@ -28,7 +28,7 @@ router.post('/register', [
   if(vResult.errors.length > 0) {
     var server_message = "";
     for(var x = 0; x < vResult.errors.length; x++) {
-      server_message+= "\u2718" + " " + vResult.errors[x].msg + " ";
+      server_message += "\u2718" + " " + vResult.errors[x].msg + " ";
     }
     var error_object = {
       status: 'error',
@@ -45,8 +45,8 @@ router.post('/register', [
     const {uname, email, password} = req.body;
     var hashPass = await bcrypt.hash(password, 10);
     
-    var select_sql = "SELECT email From users WHERE email = ?";
-    db.selectAll(select_sql, [email])
+    var select_sql = "SELECT email FROM users WHERE email = ?";
+    db.reads(select_sql, [email])
       .then(result => {
         if(result.length > 0) {
           var err_obj = {
@@ -61,7 +61,7 @@ router.post('/register', [
         } else {
           var save_sql = "INSERT INTO users (name, email, password) " +
             " VALUES (?, ?, ?)";
-          db.insertOne(save_sql, [
+          db.writes(save_sql, [
             uname,
             email,
             hashPass
@@ -105,7 +105,7 @@ router.post('/register-email',  [
     }
     var email = req.body.email;
     var select_sql = "SELECT email From users WHERE email = ?";
-    db.selectAll(select_sql, [email])
+    db.reads(select_sql, [email])
       .then(result => {
         if(result.length > 0) {
           var note_obj = {
@@ -117,7 +117,7 @@ router.post('/register-email',  [
         } else {
           var note_obj = {
             status: 'OK',
-            message: "&#10004"
+            message: "\u2714" // "&#10004"
           }
           note_obj = JSON.stringify(note_obj);
           return res.send(note_obj);
@@ -140,7 +140,7 @@ console.log(req.cookies)
 
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
-  db.selectAll("SELECT * FROM users WHERE email = ?", [email])
+  db.reads("SELECT * FROM users WHERE email = ?", [email])
   .then(result => {
     if(result.length > 0) {
     console.log(password);
@@ -154,7 +154,7 @@ router.post('/login', async (req, res) => {
           };
           const accessToken = jwt.generateAccessToken(user);
           const refreshToken = jwt.generateRefreshToken(user);
-          db.insertOne("INSERT INTO tokens (ref_token) VALUES (?)", [
+          db.writes("INSERT INTO tokens (ref_token) VALUES (?)", [
             refreshToken
           ])
           .then(result => {
@@ -222,7 +222,7 @@ router.get('/checktoken', (req, res) => {
     console.log("There is not AJWT, but RJWT");
     
     const refreshToken = cookies.RJWT;
-    db.selectAll("SELECT ref_token From tokens WHERE ref_token = ?", [
+    db.reads("SELECT ref_token From tokens WHERE ref_token = ?", [
       refreshToken
     ])
     .then(function(result) {
