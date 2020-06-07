@@ -117,7 +117,7 @@ router.post('/register-email',  [
         } else {
           var note_obj = {
             status: 'OK',
-            message: "\u2714" // "&#10004"
+            message: "\u2714"
           }
           note_obj = JSON.stringify(note_obj);
           return res.send(note_obj);
