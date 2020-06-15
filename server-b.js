@@ -1,16 +1,35 @@
 require('dotenv').config();
 
 const express = require('express');
-const jwt = require('jsonwebtoken');
-const cookie = require('cookie');
-const cookieParser = require('cookie-parser');
+const http = require('http');
+const path = require('path');
 
+const socketHandler = require('./lib/sockets.js');
+
+const PORT = 4000 || process.env.PORT;
+/* page router*/
+const pageRouter = require('./routes/pageRouter.js');
+/* application variable */
 const app = express();
-
 /* view engine */
 app.set('views', './views');
 app.set('view engine', 'ejs');
-app.use(express.static('public'))
+/* static files serving */
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/', pageRouter);
+
+const server = http.createServer(app);
+socketHandler.initializeSocketIO(server);
+
+server.listen(PORT, () => {
+  console.log(`server.js is up and running, listening to PORT: ${PORT}`);
+});
+
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+
+
+//app.use(express.static('public'))
 
 /* middlewares */
 app.use(express.json());
@@ -72,6 +91,3 @@ app.get('/clearc', (req, res) => {
   res.send("COOKIE DELETED");
 });
 
-app.listen(4000, () => {
-  console.log("server.js is up and running, listens to PORT: 4000");
-});
