@@ -1,0 +1,41 @@
+.counter-title {
+  background-color: #bbb;
+  color: black;
+  text-align: center;
+  border: 1px solid #999;
+  margin: 0;
+  padding-bottom: 10px;
+  height: 6vh;
+}
+.contact-div {
+  height: 88vh;
+  background-color: #fff;
+}
+.content-div {
+  height: 88vh;
+  background-color: #eee;
+}
+.developer {
+  margin: 0;
+  background-color: #bbb;
+  color: black;
+  padding-top: 10px;
+  border: 1px solid #999;
+  height: 6vh;
+}
+.menu {
+  height: 8vh;
+  border: 1px solid #999;
+}
+.contacts {
+  height: 80vh;
+  border: 1px solid #999;
+}
+.message-div {
+  height: 80vh;
+  border: 1px solid #999;
+}
+.input-div {
+  height: 8vh;
+  border: 1px solid #999;
+}
