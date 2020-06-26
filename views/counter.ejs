@@ -1,26 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-  
+  <meta charset="UTF8">
+  <title>Get_Close</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/styles/style.css">
   <link rel="stylesheet" type="text/css" href="/styles/counter.css">
 </head>
 <body>
   <div class="row">
-    <h3 class="col-12 counter-title">Get_Close</h3>
+    <h3 id="title" class="col-12 counter-title">Get_Close</h3>
   </div>
   <div class="row">
     <div class="col-4 contact-div">
       <div class="col-12 menu">
+        <ul class="col-12 ul-menu">
+          <li id="name_of_user" class="col-6"></li>
+          <li class="col-6">Settings</li>
+        </ul>
       </div>
-      <div class="col-12 contacts">
+      <div class="col-12 contacts" id="contacts">
       </div>
     </div>
     <div class="col-8 content-div">
-      <div class="col-12 message-div">
+      <div id="message_place" class="col-12 message-div">
       </div>
       <div class="col-12 input-div">
+        <form class="col-12" id="message-form">
+          <input class="col-10 message-input" type="text" id="message_input">
+          <input type="submit" class="col-1 send-btn" id="send_btn"
+          value="SEND">
+        </form>
       </div>
     </div>
   </div>
@@ -29,6 +39,21 @@
       Made by Mostafa Ahmadi Amin
     </h6>
   </div>
+  <script>
+    var user_name = prompt("What is your name?")
+    if(user_name != null) {
+      document.getElementById("name_of_user").innerText = user_name;
+    }
+  </script>
+  <% if(user_id) { %>
+    <script>
+      var client_id = <%= user_id %>
+    </script>
+  <% } %>
+<!--
+Another option might be to make an AJAX call back to the server once the page has already loaded, return the gameState JSON, and set clientGameState to the JSON response.
+-->  
+  <script src="/scripts/helper.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/scripts/clientio.js"></script>
 </body>

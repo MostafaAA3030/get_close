@@ -39,3 +39,41 @@
   height: 8vh;
   border: 1px solid #999;
 }
+.message-input {
+  height: 8vh;
+  font-size: 22px;
+}
+.send-btn {
+  height: 8vh;
+  padding: 0;
+}
+.ul-menu li {
+  display: inline;
+}
+.a_contact {
+  height: 10vh;
+  border: 1px solid #999;
+  padding-top: 10px;
+  padding-left: 20px;
+}
+.self-box {
+  margin-left: 2%;
+  margin-top: 2vh;
+  padding: 2px;
+  border: 1px solid #999;
+  background-color: #fcf;
+}
+.msg-box {
+  margin-left: 15%;
+  margin-top: 2vh;
+  padding: 2px;
+  border: 1px solid #999;
+  background-color: #ffc;
+}
+.n-msg {
+  color: red;
+  padding: 10px;
+  border: 1px solid red;
+  border-radius: 50%;
+/*  visibility: hidden; */
+}

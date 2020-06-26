@@ -187,9 +187,12 @@ router.post('/login', async (req, res) => {
             demo_id: "server_demo"
           };
           err_obj = JSON.stringify(err_obj);
-          res.send(err_obj);  
+          return res.send(err_obj);  
         }
-      })       
+      })
+      .catch(err => {
+        console.log(err);
+      })      
     } else {
       var err_obj = {
             status: 'error',
@@ -199,7 +202,7 @@ router.post('/login', async (req, res) => {
             demo_id: "server_demo"
           };
       err_obj = JSON.stringify(err_obj);
-      res.send(err_obj);
+      return res.send(err_obj);
     }
   })
   .catch(err => {
