@@ -42,8 +42,6 @@ client.on('send_MSG', function (data) {
 });
 
 function fetchMSG(n_el, sender_id) {
-  console.log(n_el.innerText);
-  console.log(sender_id);
   var n_el_val = n_el.innerText;
   n_el_val = parseInt(n_el_val);
   if(n_el_val > 0) {

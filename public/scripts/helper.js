@@ -40,4 +40,10 @@ function makeContactElement (the_name) {
 
 function changeAddressing (el) {
   address = el.innerHTML;
+  enableMessageInput();
+}
+
+function enableMessageInput () {
+  var message_input = getId("message_input");
+  message_input.disabled = false;
 }

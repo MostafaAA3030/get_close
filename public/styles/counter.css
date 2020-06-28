@@ -43,6 +43,14 @@
   height: 8vh;
   font-size: 22px;
 }
+input[name=message_input]:disabled {
+  background: #b9b9b9;
+}
+/*
+input[name=message_input] {
+  pointer-events: none;
+}
+*/
 .send-btn {
   height: 8vh;
   padding: 0;
