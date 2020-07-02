@@ -23,23 +23,34 @@ function makeMessageBox(data) {
 
 function makeContactElement (the_name) {
   var div_el = document.createElement('div');
-  div_el.setAttribute('class', 'col-11 a_contact');
-  div_el.setAttribute('onclick', 'changeAddressing(this)');
-  div_el.setAttribute('id', the_name);
-  var text_node = document.createTextNode(the_name);
-  div_el.appendChild(text_node);
+  div_el.setAttribute('class', 'col-12 div_contact');
+  div_el.setAttribute('id', the_name + "_contact");
+//  div_el.setAttribute('onclick', 'clickBoth("' + the_name + '")');
   contacts.appendChild(div_el);
+  
   var n_el = document.createElement('div');
   n_el.setAttribute('id', the_name + "_n");
-  n_el.setAttribute('class', 'col-1 n-msg');
+  n_el.setAttribute('class', 'n-msg');
   n_el.setAttribute('onclick', 'fetchMSG(this,"' + the_name + '")');
   var n_el_txt = document.createTextNode("0");
   n_el.appendChild(n_el_txt);
-  contacts.appendChild(n_el);
+  getId(the_name + "_contact").appendChild(n_el);
+  
+  var a_el = document.createElement('div');
+  a_el.setAttribute('class', 'a_contact');
+  a_el.setAttribute('id', the_name);
+  a_el.setAttribute('onclick', 'changeAddressing(this)');
+  var text_node = document.createTextNode(the_name);
+  a_el.appendChild(text_node);
+  getId(the_name + "_contact").appendChild(a_el);
+  
+
 }
 
 function changeAddressing (el) {
   address = el.innerHTML;
+  var note_el = getId(address + "_n");
+  note_el.click();
   enableMessageInput();
 }
 
@@ -47,3 +58,10 @@ function enableMessageInput () {
   var message_input = getId("message_input");
   message_input.disabled = false;
 }
+/*
+function clickBoth (the_name) {
+  var a_el = getId(the_name); 
+  var note_el = getId(the_name + "_n");
+  a_el.click();
+  note_el.click();
+}*/

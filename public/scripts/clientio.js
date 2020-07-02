@@ -41,26 +41,23 @@ client.on('send_MSG', function (data) {
   }
 });
 
-function fetchMSG(n_el, sender_id) {
-  var n_el_val = n_el.innerText;
-  n_el_val = parseInt(n_el_val);
-  if(n_el_val > 0) {
+function fetchMSG(note_el, sender_id) {
+  var note_val = note_el.innerText;
+  note_val = parseInt(note_val);
+  if(note_val > 0) {
     var order = {
       sender: getId(sender_id).innerText,
       receiver: user_name,
-      note_n: n_el_val
+      note_n: note_val
     };
-    console.log(order);
     client.emit('fetchMSG', order);
-    n_el.innerText = '0';
+    note_el.innerText = '0';
   } else {
     return false;
   }
 }
 
 client.on('msg_result', function (data) {
-  console.log("return msg_result");
-  console.log(data);
   for(var x = 0; x < data.length; x++) {
     makeMessageBox(data[x]);  
   }

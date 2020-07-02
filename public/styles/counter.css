@@ -58,11 +58,19 @@ input[name=message_input] {
 .ul-menu li {
   display: inline;
 }
-.a_contact {
+.div_contact {
   height: 10vh;
   border: 1px solid #999;
+  position: relative;
+}
+.a_contact {
+  position: absolute;
+  width: 100%; border: 1px solid blue;
+  height: 100%;
   padding-top: 10px;
   padding-left: 20px;
+  text-align: left;
+
 }
 .self-box {
   margin-left: 2%;
@@ -79,9 +87,16 @@ input[name=message_input] {
   background-color: #ffc;
 }
 .n-msg {
-  color: red;
+  position: absolute;
+  width: 20%;
+  right: 0;
+  top: 0;
+  height: 100%;
   padding: 10px;
+  text-align: right;
+  color: red;
+
+/*  padding: 10px; */
   border: 1px solid red;
-  border-radius: 50%;
 /*  visibility: hidden; */
 }
