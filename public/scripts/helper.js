@@ -58,10 +58,13 @@ function enableMessageInput () {
   var message_input = getId("message_input");
   message_input.disabled = false;
 }
-/*
-function clickBoth (the_name) {
-  var a_el = getId(the_name); 
-  var note_el = getId(the_name + "_n");
-  a_el.click();
-  note_el.click();
-}*/
+
+function showSettings() {
+  var settings_el = getId("settings");
+  settings_el.style.display = "block";
+}
+
+function closeSettings () {
+  var settings_el = getId("settings");
+  settings_el.style.display = "none";
+}

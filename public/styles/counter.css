@@ -10,6 +10,25 @@
 .contact-div {
   height: 88vh;
   background-color: #fff;
+  position: relative;
+}
+.settings {
+ position: absolute;
+ width: 100%;
+ height: 88vh;
+ background-color: blue;
+ display: none;
+}
+.settings-head {
+  position: absolute;
+  width: 80%;
+  border: 1px solid white;
+}
+.settings-close {
+  position: absolute;
+  left: 80%;
+  width: 20%;
+  border: 1px solid red;
 }
 .content-div {
   height: 88vh;
