@@ -68,3 +68,8 @@ function closeSettings () {
   var settings_el = getId("settings");
   settings_el.style.display = "none";
 }
+
+function closeRoom () {
+  var settings_el = getId("room");
+  settings_el.style.display = "none";
+}

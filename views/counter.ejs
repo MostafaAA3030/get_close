@@ -24,9 +24,10 @@
       <div class="settings" id="settings">
         <h2 class="settings-head">Settings
         </h2>
-        <span class="settings-close" id="settings_close" 
+        <div class="settings-close" id="settings_close" 
         onclick="closeSettings();">close
-        </span>
+        </div>
+        <div class="settings-el" onclick="prepareRoom();">Make New Room</div>
       </div>
     </div>
     <div class="col-8 content-div">
@@ -39,6 +40,17 @@
           <input type="submit" class="col-1 send-btn" id="send_btn"
           value="SEND">
         </form>
+      </div>
+      <div class="room" id="room">
+        <div class="room-head">Room
+        </div>
+        <div class="room-close" onclick="closeRoom();">Close
+        </div>
+        <div id="room_name" class="room-name">
+        </div>
+        <button class="new-room-btn" onclick="joinThisRoom();">
+          create Room
+        </button>
       </div>
     </div>
   </div>

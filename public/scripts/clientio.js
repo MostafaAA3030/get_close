@@ -12,6 +12,28 @@ client.on('followings', function (data) {
   }
 });
 
+function prepareRoom() {
+  var settings_el = getId("room");
+  settings_el.style.display = "block";
+  client.emit("room_name", {});
+}
+
+function joinThisRoom() {
+  var room_name = getId('room_name').innerHTML; alert(room_name);
+  client.emit('join_room', {new_room: room_name});
+}
+
+client.on("name_for_room", function (data) {
+  var room_name_el = getId("room_name");
+  room_name_el.innerText = data.room_name;
+});
+
+client.on('room_made', function (data) {
+  closeRoom();
+  closeSettings();
+  client.emit('relations', {user_name: user_name});
+});
+
 getId("send_btn").addEventListener('click', function (e) {
   e.preventDefault();
   var message = message_input.value;
