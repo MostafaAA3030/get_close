@@ -3,7 +3,16 @@ var message_input = getId("message_input");
 var name_of_user = getId("name_of_user");
 var contacts = getId("contacts");
 var address = "";
-
+/*
+var client = {
+  name: user_name,
+  address: "",
+  contacts: {
+    name: address_name,
+    last_contact: new Date()
+  }
+};
+*/
 function getId(id) {
   return document.getElementById(id);
 }
@@ -25,7 +34,6 @@ function makeContactElement (the_name) {
   var div_el = document.createElement('div');
   div_el.setAttribute('class', 'col-12 div_contact');
   div_el.setAttribute('id', the_name + "_contact");
-//  div_el.setAttribute('onclick', 'clickBoth("' + the_name + '")');
   contacts.appendChild(div_el);
   
   var n_el = document.createElement('div');
@@ -43,8 +51,6 @@ function makeContactElement (the_name) {
   var text_node = document.createTextNode(the_name);
   a_el.appendChild(text_node);
   getId(the_name + "_contact").appendChild(a_el);
-  
-
 }
 
 function changeAddressing (el) {
