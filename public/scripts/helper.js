@@ -1,6 +1,7 @@
 var message_place = getId('message_place');
 var message_input = getId("message_input");
 var name_of_user = getId("name_of_user");
+var content_header = getId("content_header");
 var contacts = getId("contacts");
 var address = "";
 /*
@@ -21,7 +22,7 @@ function makeMessageBox(data) {
   var div_el = document.createElement('div');
   var txt = data.sender + "-" + data.msg_time + ": " + data.message;
   var txt_node = document.createTextNode(txt);
-  if(data.sender === data.receiver) {
+  if(data.sender === user_name) {
     div_el.setAttribute('class', 'col-10 self-box');
   } else {
     div_el.setAttribute('class', 'col-10 msg-box');
@@ -54,10 +55,20 @@ function makeContactElement (the_name) {
 }
 
 function changeAddressing (el) {
-  address = el.innerHTML;
-  var note_el = getId(address + "_n");
-  note_el.click();
+ 
+  if(message_place.innerText != null) {
+    message_place.innerHTML = "";
+  }
+   
+  address = el.innerText; console.log("address is: " + address);
+  content_header.innerText = address;
+  var noti_el = getId(address + "_n");
+ // if(noti_el.innerText != 0) {
+  
+ // }
+  noti_el.click();
   enableMessageInput();
+  message_input.focus();
 }
 
 function enableMessageInput () {
@@ -78,4 +89,20 @@ function closeSettings () {
 function closeRoom () {
   var settings_el = getId("room");
   settings_el.style.display = "none";
+}
+
+function layDownMessages (data, new_messages_index) {
+  for(var x = 0; x < data.messages.length; x++) {
+    if(x == new_messages_index) {
+      newMessagesBox();
+    }
+    makeMessageBox(data.messages[x]);
+  }
+}
+function newMessagesBox () {
+  var div_el = document.createElement("div");
+  div_el.setAttribute('class', 'new-msgs-line');
+  var txt_node = document.createTextNode("New messages");
+  div_el.appendChild(txt_node);
+  message_place.appendChild(div_el);
 }

@@ -39,8 +39,8 @@ getId("send_btn").addEventListener('click', function (e) {
   var message = message_input.value;
   var username = user_name;
   client.emit('send_message', {
-    sender: username,
-    receiver: address,
+    myself: username,
+    other: address,
     message: message
   });
   message_input.value = "";
@@ -63,25 +63,41 @@ client.on('send_MSG', function (data) {
   }
 });
 
-function fetchMSG(note_el, sender_id) {
-  var note_val = note_el.innerText;
-  note_val = parseInt(note_val);
-  if(note_val > 0) {
-    var order = {
-      sender: getId(sender_id).innerText,
-      receiver: user_name,
-      note_n: note_val
-    };
-    client.emit('fetchMSG', order);
-    note_el.innerText = '0';
-  } else {
-    return false;
+function fetchMSG(noti_el, sender) {
+
+  var noti_val = noti_el.innerText;
+  noti_val = parseInt(noti_val);
+  
+  var order_length = 2;
+  
+  if(noti_val > 0) {
+    order_length = order_length + noti_val;
   }
+  
+  var order = {
+    other: getId(sender).innerText,
+    myself: user_name,
+    order_length: order_length,
+    noti_n: noti_val
+  };
+  
+  client.emit('fetchMSG', order);
+  
+  noti_el.innerText = '0';
 }
 
 client.on('msg_result', function (data) {
-  for(var x = 0; x < data.length; x++) {
-    makeMessageBox(data[x]);  
+  var msgs_length = parseInt(data.messages.length);
+  if(msgs_length === 0) {
+    return false;
+  }
+  var msgs_length_index = msgs_length - 1;
+  var new_messages_index = msgs_length - parseInt(data.noti_n);
+  console.log(data);
+  if(msgs_length > parseInt(data.noti_n)) {
+    layDownMessages(data, new_messages_index);
+  } else {
+    layDownMessages(data, 0);
   }
 });
 

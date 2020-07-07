@@ -3,26 +3,25 @@ const jwt = require('jsonwebtoken');
 
 const router = express.Router();
 
-router.get('/counter/:user_id', (req, res) => {
-  console.log(req.params.user_id);
-  res.render('counter.ejs', {user_id : req.params.user_id});
+router.get('/counter', (req, res) => {
+  res.render('counter');
 });
 
 function authenticateToken (req, res, next) {
-  console.log("server-b.js in authenticateToken middleware: ");
+  console.log("/ server-b.js / authenticateToken middleware / req.headers / ");
   console.log(req.headers);
 
   const authHeader = req.headers['authorization'];
   const hToken = authHeader && authHeader.split(' ')[1];
   
-  console.log("Header Token:");
+  console.log(" / Auth Header Token /");
   console.log(hToken);
 
   if(!hToken) {
-    var cookies = req.cookies; 
+    var cookies = req.cookies;
     var token = cookies.AJWT;
     
-    console.log("Cookie token:");
+    console.log("AJWT Cookie token:");
     console.log(token);
   } else {
     var token = hToken;
@@ -30,9 +29,9 @@ function authenticateToken (req, res, next) {
   console.log("token variable");
   console.log(token);
   if(token == null) {
-    // return res.send("Forbidden Page.");
+    return res.send("Forbidden Page.");
     // return res.render('forbidden.ejs');
-    return res.redirect('http://localhost:5000/users/checktoken');
+//    return res.redirect('http://localhost:5000/users/checktoken');
   }
    
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {

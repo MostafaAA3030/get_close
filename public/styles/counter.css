@@ -40,11 +40,29 @@
   top: 10vh;
   color: blue;
 }
+
+/* content css style */
 .content-div {
   position: relative;
   height: 88vh;
   background-color: #eee;
+  border: 3px solid yellow;
 }
+.content-header {
+  height: 10vh;
+  border: 2px solid red;
+  padding-left: 10px;
+  padding-top: 2px;
+}
+.message-div {
+  height: 70vh;
+  border: 1px solid #999;
+}
+.input-div {
+  height: 8vh;
+  border: 1px solid #999;
+}
+/* another part */
 .developer {
   margin: 0;
   background-color: #bbb;
@@ -61,14 +79,7 @@
   height: 80vh;
   border: 1px solid #999;
 }
-.message-div {
-  height: 80vh;
-  border: 1px solid #999;
-}
-.input-div {
-  height: 8vh;
-  border: 1px solid #999;
-}
+
 .message-input {
   height: 8vh;
   font-size: 22px;
@@ -116,6 +127,14 @@ input[name=message_input] {
   padding: 2px;
   border: 1px solid #999;
   background-color: #ffc;
+}
+.new-msgs-line {
+  width: 100%;
+  margin-top: 2vh;
+  padding: 2px;
+  text-align: center;
+  border: 1px solid #999;
+  background-color: #fff;
 }
 .n-msg {
   position: absolute;

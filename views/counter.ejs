@@ -31,6 +31,8 @@
       </div>
     </div>
     <div class="col-8 content-div">
+      <div class="col-12 content-header" id="content_header">
+      </div>
       <div id="message_place" class="col-12 message-div">
       </div>
       <div class="col-12 input-div">
@@ -60,16 +62,11 @@
     </h6>
   </div>
   <script>
-    var user_name = prompt("What is your name?")
+    var user_name = prompt("What is your name?");
     if(user_name != null) {
       document.getElementById("name_of_user").innerText = user_name;
-    }    
+    }
   </script>
-  <% if(user_id) { %>
-  <script>
-      var client_id = <%= user_id %>
-  </script>
-  <% } %>
 <!--
 Another option might be to make an AJAX call back to the server once the page has already loaded, return the gameState JSON, and set clientGameState to the JSON response.
 -->  
