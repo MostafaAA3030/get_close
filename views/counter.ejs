@@ -62,9 +62,15 @@
     </h6>
   </div>
   <script>
-    var user_name = prompt("What is your name?");
-    if(user_name != null) {
-      document.getElementById("name_of_user").innerText = user_name;
+  /*
+    asks username ...
+  */
+    let user_name = "";
+    do {
+      user_name = prompt("What is your name?");
+    } while (!user_name);
+    if(user_name) {
+      document.getElementById("name_of_user").innerHTML = user_name;
     }
   </script>
 <!--
