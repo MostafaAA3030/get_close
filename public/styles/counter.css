@@ -57,6 +57,7 @@
 .message-div {
   height: 70vh;
   border: 1px solid #999;
+  overflow: auto;
 }
 .input-div {
   height: 8vh;
@@ -129,7 +130,6 @@ input[name=message_input] {
   background-color: #ffc;
 }
 .new-msgs-line {
-  width: 100%;
   margin-top: 2vh;
   padding: 2px;
   text-align: center;
