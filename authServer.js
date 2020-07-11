@@ -183,7 +183,7 @@ app.post('/login', [
     });
 });
 
-/* This route sends JSON POST */
+/* This route sends JSON POST *//*
 app.get('/login', (req, res) => {
   console.log("GET /login http Request received...");
   res.send(`
@@ -283,7 +283,7 @@ function deleteRefreshToken () {
 </body>
 </html>
   `);
-});
+});*/
 
 app.post('/token', (req, res) => {
   const refreshToken = req.body.token;
