@@ -138,12 +138,11 @@ console.log(req.cookies)
   res.render('login.ejs');
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', (req, res) => { // async , this was not necessary ...
   const { email, password } = req.body;
   db.reads("SELECT * FROM users WHERE email = ?", [email])
   .then(result => {
     if(result.length > 0) {
-    console.log(password);
     console.log(result[0].password);
       bcrypt.compare(password, result[0].password)
       .then(function(compare_result) {
@@ -154,9 +153,8 @@ router.post('/login', async (req, res) => {
           };
           const accessToken = jwt.generateAccessToken(user);
           const refreshToken = jwt.generateRefreshToken(user);
-          db.writes("INSERT INTO tokens (ref_token) VALUES (?)", [
-            refreshToken
-          ])
+          db.writes("INSERT INTO tokens (ref_token) VALUES (?)", 
+          [refreshToken])
           .then(result => {
             var acLifeTime = 10 * 60 * 1000;
             res.cookie('AJWT', accessToken, {
@@ -171,7 +169,8 @@ router.post('/login', async (req, res) => {
               sameSite: 'strict'
             });
             var res_obj = {
-              status: 'OK'
+              status: 'OK',
+              RToken: refreshToken
             }
             return res.send(res_obj);  
           })
@@ -179,30 +178,32 @@ router.post('/login', async (req, res) => {
             console.log(err);
           })
         } else {
-          var err_obj = {
+          /* if password is not right */
+          var reject_obj = {
             status: 'error',
             res_sign: "\u2718",
             res_class: "error-span",
             message: "Email/Password is incorrect.",
             demo_id: "server_demo"
           };
-          err_obj = JSON.stringify(err_obj);
-          return res.send(err_obj);  
+          reject_obj = JSON.stringify(reject_obj);
+          return res.send(reject_obj);  
         }
       })
       .catch(err => {
         console.log(err);
       })      
     } else {
-      var err_obj = {
+      /* if the email is not right */
+      var reject_obj = {
             status: 'error',
             res_sign: "\u2718",
             res_class: "error-span",
             message: "Email/Password is incorrect.",
             demo_id: "server_demo"
           };
-      err_obj = JSON.stringify(err_obj);
-      return res.send(err_obj);
+      reject_obj = JSON.stringify(reject_obj);
+      return res.send(reject_obj);
     }
   })
   .catch(err => {

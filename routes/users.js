@@ -134,12 +134,16 @@ router.post('/register-email',  [
 });
 
 router.get('/login', (req, res) => {
-console.log(req.cookies)
+  console.log(req.cookies);
   res.render('login.ejs');
 });
 
-router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+router.post('/login', (req, res) => { // async 
+console.log("Login");
+//  const { email, password } = req.body;
+//  console.log(email);
+//  console.log(password);
+  /*
   db.selectAll("SELECT * FROM users WHERE email = ?", [email])
   .then(result => {
     if(result.length > 0) {
@@ -204,7 +208,7 @@ router.post('/login', async (req, res) => {
   })
   .catch(err => {
     console.log(err);
-  })
+  })*/
 });
 
 router.get('/checktoken', (req, res) => {

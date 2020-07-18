@@ -21,9 +21,6 @@ body {
 [class*="col-"] {
   float: left;
 }
-.row {
-  
-}
 .row::after {
   content: "";
   clear: both;
@@ -37,7 +34,6 @@ body {
   font-style: italic;
   letter-spacing: 3px;
   text-shadow: 5px 5px 5px #fff;
-  height: 20vh;
 }
 .sub-title {
   margin-left: 16.66%;

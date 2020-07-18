@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const { check, validationResult } = require('express-validator');
 const cookie = require('cookie');
-const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser'); // cookieParser
 const jwt = require('jsonwebtoken');
 const mariadb = require('mariadb');
 const fetch = require('node-fetch');
@@ -12,7 +12,7 @@ const accountRouter = require('./routes/account.js');
 const usersRouter = require('./routes/login.js');
 
 const app = express();
-
+/*
 function makeConn() {
   return new Promise(function(resolve, reject) {
     mariadb.createConnection({
@@ -29,7 +29,7 @@ function makeConn() {
         reject(err);
       });
   });
-}
+}*/
 /* view engine */
 app.set('views', './views');
 app.set('view engine', 'ejs');
@@ -38,7 +38,7 @@ app.use(express.static('public'))
 /* middlewares */
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser()); // cookieParser make req.cookies
 
 /* routes */
 app.use('/users', usersRouter);
@@ -134,7 +134,7 @@ function getUserData() {
 function generateAccessToken(user) {
   return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30s'}); 
 }
-
+/*
 app.post('/login', [
   check('username')
     .isLength({ min: 3 })
@@ -155,13 +155,13 @@ app.post('/login', [
   const username = req.body.username; 
   const user = { name: username };
 
-  /* make JWT accessToken and refreshToken */
+  /* make JWT accessToken and refreshToken *//*
   const accessToken = generateAccessToken(user);
   const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
   res.setHeader('Set-Cookie', cookie.serialize('AJWT', accessToken, {
     maxAge: 60 * 60 * 24 * 7 // 1 week
   }));
-  /* Insert rtoken in database and response */
+  /* Insert rtoken in database and response *//*
   makeConn()
     .then(function(conn) {
       var refTokenSql = "INSERT INTO tokens (ref_token) VALUES (?)";
@@ -182,7 +182,7 @@ app.post('/login', [
       console.log("Not Connected to database.");
     });
 });
-
+*/
 /* This route sends JSON POST *//*
 app.get('/login', (req, res) => {
   console.log("GET /login http Request received...");

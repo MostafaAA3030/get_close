@@ -52,8 +52,10 @@ function authenticateToken (req, res, next) {
 
 /* Routes */
 router.get('/', authenticateToken, (req, res) => {
-  console.log("cookies in server b");
+  console.log("cookies in server-b: ");
   console.log(req.cookies);
+  console.log("req.user is: ");
+  console.log(req.user);
   res.render('other-page.ejs');
 });
 

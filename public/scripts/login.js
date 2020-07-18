@@ -31,8 +31,9 @@ function authForm () {
     if(this.readyState == 4 && this.status == 200) {
       var res_obj = JSON.parse(this.responseText)
       if(res_obj.status != 'OK') {
-       showDemo(res_obj);
+        showDemo(res_obj);
       } else {
+        localStorage.setItem("RToken", res_obj.RToken);
         window.location = 'http://localhost:5000/account/home';
       }
     }

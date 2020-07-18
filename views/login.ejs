@@ -5,28 +5,28 @@
   <title>Get Close - Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/styles/style.css">
+  <link rel="stylesheet" href="/styles/login-style.css">
 </head>
 <body>
-  <div class="col-12 row">
+  <div class="col-12 row header-part">
     <h1 class="col-12 title">Get Close</h1>
   </div>
-  <div class="col-12 row">
-    <h2 class="col-8 sub-title">
-      Login
-    </h2>
+  <div class="col-12 row middle-part">
+    <h2 class="col-8 sub-title">Login</h2>
     <form method="POST" class="col-8 auth-form" id="login_form">
       <label for="email" class="col-12 labels">Email: </label>
       <input type="email" id="email" name="email" 
       class="col-12 inputs">
+      
       <label for="password" class="col-12 labels">Password: </label>
       <input type="password" id="password" name="password" 
       class="col-12 inputs">
+      
       <button type="submit" class="btn">Login</button>
-      <div class="col-12" id="server_demo">
-      </div>
+      <div class="col-12" id="server_demo"></div>
     </form>
   </div>
-  <div class="row">
+  <div class="col-12 row footer-part">
     <p class="col-12 footer">Made by mostafa@aminbros.com</p>
   </div>
   <script src="/scripts/login.js"></script>
