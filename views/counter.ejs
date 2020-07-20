@@ -65,13 +65,22 @@
   /*
     asks username ...
   */
-    let user_name = "";
+    // var user_email = "";
+    //var user_name = "<%= name %>";
+    var user_name = "<%= email %>"; alert(user_name);
+    if(user_name == "") {
+      window.location = "http://localhost:5000/users/login";
+    } else {
+      document.getElementById("name_of_user").innerHTML = user_name;    
+    }
+    /*
+    var user_name ="";
     do {
       user_name = prompt("What is your name?");
     } while (!user_name);
     if(user_name) {
       document.getElementById("name_of_user").innerHTML = user_name;
-    }
+    }*/
   </script>
 <!--
 Another option might be to make an AJAX call back to the server once the page has already loaded, return the gameState JSON, and set clientGameState to the JSON response.

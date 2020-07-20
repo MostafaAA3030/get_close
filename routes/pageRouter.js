@@ -3,8 +3,14 @@ const jwt = require('jsonwebtoken');
 
 const router = express.Router();
 
-router.get('/counter', (req, res) => {
-  res.render('counter');
+router.get('/counter', authenticateToken, (req, res) => {
+  var data = {
+    name: req.user.name,
+    email:req.user.email
+  };
+  console.log("data is: ");
+  console.log(data);
+  res.render('counter', data);
 });
 
 function authenticateToken (req, res, next) {
