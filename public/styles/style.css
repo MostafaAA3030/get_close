@@ -1,11 +1,13 @@
 * {
   box-sizing: border-box;
 }
+
 body {
   margin: 0;
   padding: 0;
   background-color: #578;
 }
+
 .col-1 {width: 8.33%;}
 .col-2 {width: 16.66%;}
 .col-3 {width: 25%;}
@@ -18,14 +20,17 @@ body {
 .col-10 {width: 83.33%;}
 .col-11 {width: 91.66%;}
 .col-12 {width: 100%;}
+
 [class*="col-"] {
   float: left;
 }
+
 .row::after {
   content: "";
   clear: both;
   display: table;
 }
+/* I think here needs some change */
 .title {
   padding-top: 2%;
   padding-bottom: 2%;
@@ -67,7 +72,6 @@ body {
 .demos {
   color: #acd;
   font-weight: bold;
-  width: 30.33%;
   padding-left: 1%;
 }
 .footer {
