@@ -36,13 +36,14 @@ function registerForm () {
   var name_value = getId("uname").value;
   var email_value = getId("email").value;
   var password_value = getId("password").value;
+  // it is better to validate inputs before sending them to server .
   var user_data = {
     uname: name_value,
     email: email_value,
     password: password_value
   };
   user_data = JSON.stringify(user_data);
-//  alert(user_data);
+  
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
     if(this.readyState == 4 && this.status == 200) {
@@ -107,7 +108,12 @@ getId("email").addEventListener('change', function () {
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.send(user_email);
 });
-
+/*
+  input event works when the value of input element changes .
+*/
+/*
+  this function onchange checks out the value to see the condistions
+*/
 getId("password").addEventListener('input', function() {
   var password = getId("password").value;
 

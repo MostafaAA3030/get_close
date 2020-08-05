@@ -37,8 +37,8 @@ router.post('/register', [
       message: server_message,
       demo_id: "server_demo"
     }
-      console.log(vResult);
-      console.log(error_object);
+    //  console.log(vResult);
+    //  console.log(error_object);
       error_object = JSON.stringify(error_object);
       return res.send(error_object);
   } else {
@@ -67,7 +67,7 @@ router.post('/register', [
             hashPass
           ])
           .then(function(result) {
-            console.log(result);
+          //  console.log(result);
             var res_obj = {
               status: 'OK',
               res_sign: "\u2714",
