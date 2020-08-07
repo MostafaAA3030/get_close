@@ -59,10 +59,9 @@ router.post('/register', [
           JSON.stringify(err_obj);
           return res.send(err_obj);  
         } else {
-          var save_sql = "INSERT INTO users (name, email, password) " +
-            " VALUES (?, ?, ?)";
+          var save_sql = "INSERT INTO users (email, password) " +
+            " VALUES (?, ?)";
           db.writes(save_sql, [
-            uname,
             email,
             hashPass
           ])
