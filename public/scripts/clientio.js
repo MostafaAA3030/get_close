@@ -1,16 +1,20 @@
 const client = io();
 
 client.on('connect', function () {
-  client.emit('start_up', {username: user_name});
+  client.emit('start_up', {
+    user_id: user_id,
+    username: user_name
+  });
 });
 
 client.on('contact_list', function (data) {
   contacts.innerHTML = "";
   for(var x = 0; x < data.length; x++) {
-    if(data[x].type == 1) {
-      makeContactElement(data[x].following, data[x].id, data[x].type);
+    if(data[x].contact_type && data[x].contact_type == 1) {
+      makeContactElement(data[x].email, data[x].user_id, data[x].contact_type);
     } else if (data[x].type == 2) {
-      makeGroupElement(data[x].following, data[x].id, data[x].type);
+    // this part will be maintained later ...
+      makeGroupElement(data[x].following, data[x].id, data[x].contact_type);
     }
   }
 });

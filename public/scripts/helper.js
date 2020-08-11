@@ -36,7 +36,7 @@ function makeContactElement (the_name, the_id, type) {
   var text_node = document.createTextNode(the_name);
   a_el.appendChild(text_node);
   getId(the_name + "_contact").appendChild(a_el);
-} // ali, 1, 1
+} // fetchMSG("ali", 1, 1) AND changeAddressing("ali", 1, 1)
 
 function makeGroupElement (group_name, group_id, type) {
   var div_el = document.createElement('div');

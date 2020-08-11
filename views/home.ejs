@@ -11,8 +11,10 @@
   </form>
   <div id="demo2"></div>
   <script>
+  // we get the refresh Token from localStorage here
 var RToken = localStorage.getItem("RToken");
 document.write(RToken);
+// this function is just redirect action 
 function getUserData() {
   window.location = 'http://localhost:4000/counter';
 }

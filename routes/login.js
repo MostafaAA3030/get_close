@@ -133,7 +133,8 @@ router.post('/register-email',  [
 });
 
 router.get('/login', (req, res) => {
-console.log(req.cookies)
+  console.log("get - /login - cookies in req: ");
+  console.log(req.cookies)
   res.render('login.ejs');
 });
 
@@ -142,17 +143,17 @@ router.post('/login', (req, res) => { // async , this was not necessary ...
   db.reads("SELECT * FROM users WHERE email = ?", [email])
   .then(result => {
     if(result.length > 0) {
-    console.log(result[0].password);
+      console.log(result[0].password);
       bcrypt.compare(password, result[0].password)
       .then(function(compare_result) {
         if(compare_result == true) {
-          const user = { 
-            name: result[0].name,
+          const user = {
+            user_id: result[0].user_id,
             email: result[0].email
           };
           const accessToken = jwt.generateAccessToken(user);
           const refreshToken = jwt.generateRefreshToken(user);
-          db.writes("INSERT INTO tokens (ref_token) VALUES (?)", 
+          db.writes("INSERT INTO tokens (ref_token) VALUES (?)",
           [refreshToken])
           .then(result => {
             var acLifeTime = 10 * 60 * 1000;
@@ -177,7 +178,7 @@ router.post('/login', (req, res) => { // async , this was not necessary ...
             console.log(err);
           })
         } else {
-          /* if password is not right */
+          /* if password is not correct */
           var reject_obj = {
             status: 'error',
             res_sign: "\u2718",
@@ -193,7 +194,7 @@ router.post('/login', (req, res) => { // async , this was not necessary ...
         console.log(err);
       })      
     } else {
-      /* if the email is not right */
+      /* if the email does not exists in database */
       var reject_obj = {
             status: 'error',
             res_sign: "\u2718",

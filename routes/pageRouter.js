@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/counter', authenticateToken, (req, res) => {
   var data = {
-    name: req.user.name,
+    user_id: req.user.user_id,
     email:req.user.email
   };
   console.log("data is: ");

@@ -33,7 +33,9 @@ function authForm () {
       if(res_obj.status != 'OK') {
         showDemo(res_obj);
       } else {
+        // we set the Refresh Token local storage here
         localStorage.setItem("RToken", res_obj.RToken);
+        // and redirect to next address
         window.location = 'http://localhost:5000/account/home';
       }
     }

@@ -66,8 +66,9 @@
     asks username ...
   */
     // var user_email = "";
-    //var user_name = "<%= name %>";
-    var user_name = "<%= email %>"; alert(user_name);
+    // var user_name = "";
+    var user_name = "<%= email %>";
+    var user_id = "<%= user_id %>";
     if(user_name == "") {
       window.location = "http://localhost:5000/users/login";
     } else {
