@@ -121,7 +121,7 @@ function prepareRoom() {
 }
 
 function joinThisRoom() {
-  var room_name = getId('room_name').innerHTML; alert(room_name);
+  var room_name = getId('room_name').innerHTML;
   client.emit('join_room', {new_room: room_name});
 }
 

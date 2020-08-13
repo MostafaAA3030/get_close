@@ -66,16 +66,23 @@ router.post('/register', [
             hashPass
           ])
           .then(function(result) {
-          //  console.log(result);
-            var res_obj = {
-              status: 'OK',
-              res_sign: "\u2714",
-              res_class: "ok-span",
-              message: "OK",
-              demo_id: "server_demo"
-            }
-            res_obj = JSON.stringify(res_obj);
-            return res.send(res_obj);
+            console.log(result.insertId);
+            var save2 = "INSERT INTO contacts (contact_id) VALUES (?)";
+            db.writes(save2, [result.insertId])
+            .then(function(result2) {
+              var res_obj = {
+                status: 'OK',
+                res_sign: "\u2714",
+                res_class: "ok-span",
+                message: "OK",
+                demo_id: "server_demo"
+              }
+              res_obj = JSON.stringify(res_obj);
+              return res.send(res_obj);
+            })
+            .catch(function (err) {
+              console.log(err);
+            });
           })
           .catch(err => {
             console.log(err);
