@@ -22,11 +22,16 @@
       <div class="col-12 contacts" id="contacts">
       </div>
       <!-- Settings Box -->
-      <div class="settings" id="settings">
-        <h2 class="settings-head">Settings</h2>
-        <div class="settings-close" id="settings_close" 
-        onclick="closeSettings();">close</div>
-        <div class="settings-el" onclick="prepareRoom();">Make New Group</div>
+      <div class="col-12 settings" id="settings">
+        <div class="settings-top">
+          <h2 class="settings-head">Settings</h2>
+          <div class="settings-close" id="settings_close" 
+            onclick="closeSettings();">close</div>
+        </div>
+        <div class="col-12 settings-el" onclick="prepareRoom();">
+        Make New Group</div>
+        <div class="col-12 settings-el" onclick="showNewContactPage();">
+        Add friend</div>
       </div>
       
     </div>
@@ -58,18 +63,42 @@
       Made by Mostafa Ahmadi Amin
     </h6>
   </div>
+  <!-- new group creator page -->
+  <div id="new_contact" class="new-contact">
+    <div class="row col-12 newc-hdiv">
+      <h1 class="col-11 newc-hdiv-h">Make New Group</h1>
+      <div class="col-1 newc-hdiv-c" onclick="closeNewContactPage();">Close
+      </div>
+    </div>
+    <div class="row col-12 newc-mdiv">
+      <div class="col-12 newc-mdiv-form" id="create_group_form">
+        <div class="row form-parts" >
+          <h2 class="col-2 fparts-h">GROUP NAME: 
+          </h2>
+          <input class="col-5 fparts-i" name="group-name" id="group_name"
+            type="text">
+          <button class="col-2 fparts-b" onclick="createNewGroup();">
+            Create Group
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
   <script>
   /*
     asks username ...
   */
-    // var user_email = "";
-    // var user_name = "";
-    var user_name = "<%= email %>";
-    var user_id = "<%= user_id %>";
-    if(user_name == "") {
+    var user = {
+      uid: "<%= uid%>",
+      uname: "",
+      uemail: "<%= uemail %>",
+      ucontacts: []
+    };
+    
+    if(user.uemail == "") {
       window.location = "http://localhost:5000/users/login";
     } else {
-      document.getElementById("name_of_user").innerHTML = user_name;    
+      document.getElementById("name_of_user").innerHTML = user.uemail;    
     }
     /*
     var user_name ="";
@@ -78,7 +107,8 @@
     } while (!user_name);
     if(user_name) {
       document.getElementById("name_of_user").innerHTML = user_name;
-    }*/
+    }
+    */
   </script>
 <!--
 Another option might be to make an AJAX call back to the server once the page has already loaded, return the gameState JSON, and set clientGameState to the JSON response.

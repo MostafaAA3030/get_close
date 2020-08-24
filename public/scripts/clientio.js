@@ -2,19 +2,20 @@ const client = io();
 
 client.on('connect', function () {
   client.emit('start_up', {
-    user_id: user_id,
-    username: user_name
+    uid: user.uid,
+    uname: user.uname,
+    uemail: user.uemail
   });
 });
 
-client.on('contact_list', function (data) {
-  contacts.innerHTML = "";
+client.on('contact_list', function (data) { 
+  contacts.innerHTML = ""; 
+  console.log(data);
   for(var x = 0; x < data.length; x++) {
     if(data[x].contact_type && data[x].contact_type == 1) {
-      makeContactElement(data[x].email, data[x].user_id, data[x].contact_type);
-    } else if (data[x].type == 2) {
-    // this part will be maintained later ...
-      makeGroupElement(data[x].following, data[x].id, data[x].contact_type);
+      makeContactElement(data[x]);
+    } else if (data[x].contact_type && data[x].contact_type == 2) {
+      makeGroupElement(data[x]);
     }
   }
 });
@@ -119,6 +120,39 @@ function prepareRoom() {
   settings_el.style.display = "block";
   client.emit("room_name", {});
 }
+/*
+var user = {
+      uid: "<%= uid%>",
+      uname: "",
+      uemail: "<%= uemail %>",
+      ucontacts: []
+    };
+*/
+function createNewGroup () {
+  var group_name = getId("group_name").value;
+  if(group_name != "") {
+    var data = {
+      uid: user.uid,
+      uname: user.uname,
+      uemail: user.uemail,
+      g_name: group_name
+    }
+    client.emit("create_group", data);
+    closeNewContactPage();
+  } else {
+    return false;
+  }
+}
+
+function showNewContactPage () {
+  var new_contact_page = getId("new_contact");
+  new_contact_page.style.display = "block";
+}
+
+function closeNewContactPage() {
+  var new_contact_page = getId("new_contact");
+  new_contact_page.style.display = "none";
+}
 
 function joinThisRoom() {
   var room_name = getId('room_name').innerHTML;
@@ -134,6 +168,14 @@ client.on('room_made', function (data) {
   closeRoom();
   closeSettings();
   client.emit('relations', {user_name: user_name});
+});
+
+client.on('group_added', function(data) {
+  client.emit('start_up', {
+    uid: user.uid,
+    uname: user.uname,
+    uemail: user.uemail
+  });
 });
 
 client.on('disconnect', function () {
