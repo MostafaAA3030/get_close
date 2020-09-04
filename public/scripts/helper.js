@@ -25,31 +25,37 @@ function makeContactElement (user_data) { // the_name, the_id, type
   }
   */
   
-  var div_el = document.createElement('div');
-  div_el.setAttribute('class', 'col-12 div_contact');
-  div_el.setAttribute('id', user_data.contact_name + "_contact");
-    // ali_contact
-  contacts.appendChild(div_el);
-  
-  var n_el = document.createElement('div');
-  n_el.setAttribute('id', user_data.contact_name + "_n"); 
-    // ali_n
-  n_el.setAttribute('class', 'n-msg');
-  n_el.setAttribute('onclick', 'fetchMSG(' + user_data + ')');
-// "' + user_data.contact_name + '", "' + the_id + '", "' + type + '")');
-  var n_el_txt = document.createTextNode("0");
-  n_el.appendChild(n_el_txt);
-  getId(user_data.contact_name + "_contact").appendChild(n_el);
-  
-  var a_el = document.createElement('div');
-  a_el.setAttribute('class', 'a_contact');
-  a_el.setAttribute('id', user_data.contact_name); // ali
-  a_el.setAttribute('onclick', 'changeAddressing(' + user_data + ')');
-// + user_data.contact_name + '", "' +   the_id + '", "' + type + '")');
+  var user_data_json = JSON.stringify(user_data);
+  /* 1st el */
+  var contact_div = document.createElement('div');
+  contact_div.setAttribute('class', 'col-12 contact-div');
+  contact_div.setAttribute('id', user_data.contact_name + "_contact");
+  contacts.appendChild(contact_div);  // id = 'ali@gmail.com_contact'
+  /* 2nd el */
+  var name_el = document.createElement('div');
+  name_el.setAttribute('class', 'col-12 contact-name');
+  name_el.setAttribute('id', user_data.contact_name); // id = 'ali@gmail.com'
+  name_el.setAttribute('onclick', "changeAddressing(" + user_data_json + ")"); 
   var text_node = document.createTextNode(user_data.contact_name);
-  a_el.appendChild(text_node);
-  getId(user_data.contact_name + "_contact").appendChild(a_el);
-} // fetchMSG("ali", 1, 1) AND changeAddressing("ali", 1, 1)
+  name_el.appendChild(text_node);
+  contact_div.appendChild(name_el);
+  /* 3rd el */
+  var msg_counter_el = document.createElement('div');
+  msg_counter_el.setAttribute('id', user_data.contact_name + "_n"); 
+  msg_counter_el.setAttribute('class', 'contact-msg-counter');
+    // id = 'ali@gmail.com_n'
+  msg_counter_el.setAttribute('onclick', 'changeAddressing(' + user_data_json + ')');
+  var n_el_txt = document.createTextNode("0");
+  msg_counter_el.appendChild(n_el_txt);
+  name_el.appendChild(msg_counter_el);
+  /* 4th el*/ 
+  var btn = document.createElement("BUTTON");
+  btn.setAttribute('class', 'contact-btn');
+  btn.setAttribute('id', user_data.contact_name + "_btn");
+  btn.setAttribute('onclick', 'fetchMSG(' + user_data_json + ')');
+  btn.innerHTML = "GO";
+  name_el.appendChild(btn);
+}
 /* Test function */
 function attachEl (p_el, el_data) {
   var el = document.createElement(el_data.el_type);
@@ -78,30 +84,38 @@ function makeGroupElement (group_data) { // group_name, group_id, type
           contact_type: 2
   }
   */
+  
   var group_id = group_data.address_number;
   group_id = "group" + group_id;
-  var div_el = document.createElement('div');
-  div_el.setAttribute('class', 'col-12 div_contact');
-  div_el.setAttribute('id', group_id + "_contact"); // group1_contact
-  contacts.appendChild(div_el);
-  
-  var n_el = document.createElement('div');
-  n_el.setAttribute('id', group_id + "_n"); // group1_n
-  n_el.setAttribute('class', 'n-msg');
-  n_el.setAttribute('onclick', 'fetchMSG(' + group_data + ')');
-  //"' + group_name + '", "'+ group_id + '","' + type + '")');
+  var group_data_json = JSON.stringify(group_data);
+  /* first el */
+  var contact_div = document.createElement('div');
+  contact_div.setAttribute('class', 'col-12 div-contact');
+  contact_div.setAttribute('id', group_id + "_contact"); // group1_contact
+  contacts.appendChild(contact_div);
+  /* second el */
+  var name_el = document.createElement('div');
+  name_el.setAttribute('class', 'col-12 contact-name');
+  name_el.setAttribute('id', group_id); // group1
+  name_el.setAttribute('onclick', 'changeAddressing(' + group_data_json + ')');
+  var text_node = document.createTextNode(group_data.contact_name); // ahmady
+  name_el.appendChild(text_node);
+  contact_div.appendChild(name_el);
+  /* third el */   
+  var msg_counter_el = document.createElement('div');
+  msg_counter_el.setAttribute('id', group_id + "_n"); // group1_n
+  msg_counter_el.setAttribute('class', 'contact-msg-counter');
+  msg_counter_el.setAttribute('onclick', 'changeAddressing(' + group_data_json + ')');
   var n_el_txt = document.createTextNode("0");
-  n_el.appendChild(n_el_txt);
-  getId(group_id + "_contact").appendChild(n_el);
-  
-  var a_el = document.createElement('div');
-  a_el.setAttribute('class', 'a_contact');
-  a_el.setAttribute('id', group_id); // group1
-  a_el.setAttribute('onclick', 'changeAddressing(' + group_data + ')');
-// "' + group_name + '", "' + group_id + '", "' + type + '")');
-  var text_node = document.createTextNode(group_data.contact_name); //ahmady
-  a_el.appendChild(text_node);
-  getId(group_id + "_contact").appendChild(a_el);
+  msg_counter_el.appendChild(n_el_txt);
+  name_el.appendChild(msg_counter_el);
+  /* Fourth el */
+  var btn = document.createElement("BUTTON");
+  btn.setAttribute('class', 'contact-btn');
+  btn.setAttribute('id', group_id + "_btn");
+  btn.setAttribute('onclick', 'fetchMSG(' + group_data_json + ')');
+  btn.innerHTML = "GO";
+  name_el.appendChild(btn);  
 }
 
 function changeAddressing (the_address) {
@@ -111,25 +125,38 @@ function changeAddressing (the_address) {
   }
   /*
   {
-          address_number: 5,
-          contact_id: 1,
-          contact_name: 'salam',
-          contact_type: 2
+    address_number: 5, contact_id ((primary key))
+    contact_id: 1, user_id or group_id
+    contact_name: 'salam', ((email or group_name))
+    contact_type: 2 ((1 or 2))
+  }
+  second functional object  
+  {
+    address_number: "",
+    address_id: "",
+    name: "",
+    type: ""
   }
   */
-  if(the_address.type == 1) {
+  var btn_id;
+  if(the_address.contact_type == 1) {
+    address.address_number = the_address.address_number;
+    address.address_id = the_address.contact_id;
     address.name = the_address.contact_name;
     address.type = the_address.contact_type;
     content_header.innerText = the_address.contact_name;
-    
-  } else if(the_address.type == 2) {
+    btn_id = the_address.contact_name + "_btn";
+  } else if(the_address.contact_type == 2) {
+    address.address_number = the_address.address_number;
+    address.address_id = the_address.contact_id;
     address.name = the_address.address_number;
     address.type = the_address.contact_type;
-    content_header.innerText = the_address.contact_name;
-    
+    content_header.innerText = the_address.contact_name;  
+    btn_id = "group" + the_address.address_number + "_btn";
   }
-  var noti_el = getId(the_address.name + "_n");
-  noti_el.click();
+  var btn_el = getId(btn_id);
+  btn_el.click();
+  btn_id;
   enableMessageInput();
   message_input.focus();
 }
@@ -137,35 +164,94 @@ function changeAddressing (the_address) {
 function makeMessageBox(data) {
   var div_el = document.createElement('div');
   var h_el = document.createElement('h4');
-  var txt1 = document.createTextNode(data.sender + "<<" + data.msg_time + 
-  ">>");
+  var txt1 = document.createTextNode(data.sender_email + "<<" + data.msg_time + ">>");
   h_el.setAttribute('class', 'col-12');
   h_el.appendChild(txt1);
   var p_el = document.createElement('p');
   var txt2 = document.createTextNode(data.message);
-  if(data.sender === user_name) {
-    div_el.setAttribute('class', 'col-10 self-box');
+  if(data.sender_email === user.uemail) {
+    div_el.setAttribute('class', 'self-box');
   } else {
-    div_el.setAttribute('class', 'col-10 msg-box');
+    div_el.setAttribute('class', 'msg-box');
   }
   p_el.appendChild(txt2);
   div_el.appendChild(h_el);
   div_el.appendChild(p_el);
   message_place.appendChild(div_el);
-  
   scrollToBottom();
 }
-
+function makeMessageBox2(data) {
+  var div_el = document.createElement('div');
+  var h_el = document.createElement('h4');
+  console.log(data);
+  if(data.sender_email == user.uemail) {
+    var txt1 = document.createTextNode(data.sender_email + "<<" + data.msg_date + ">>");
+    div_el.setAttribute('class', 'self-box');
+  } else {
+    var txt1 = document.createTextNode(data.sender_email + "<<" + data.msg_date + ">>");
+    div_el.setAttribute('class', 'msg-box');
+  }
+  h_el.setAttribute('class', 'col-12');
+  h_el.appendChild(txt1);
+  var p_el = document.createElement('p');
+  var txt2 = document.createTextNode(data.message);
+  p_el.appendChild(txt2);
+  div_el.appendChild(h_el);
+  div_el.appendChild(p_el);
+  message_place.appendChild(div_el);
+  scrollToBottom();
+}
+/*
+var msg = {
+        sender_id: data.my_id,
+        sender_email: data.my_email,
+        receiver_number: data.address_number,
+        receiver_id: data.address_id,
+        receiver_name: data.address_name,
+        receiver_type: data.address_type,
+        message: data.message,
+        msg_time: msg_time
+      };
+*/
 function layDownMessages (data, new_messages_index) {
-  for(var x = 0; x < data.messages.length; x++) {
+  var result_data = {
+    sender_id: data.sender_id,
+    sender_email: data.sender_email,
+    receiver_number: data.contact_number,
+    receiver_id: data.contact_id,
+    receiver_name: data.contact_name,
+    receiver_type: data.contact_type,
+    order_length: data.order_length,
+    noti_n: data.noti_n,
+    messages: data.messages
+  };
+  for(var x = 0; x < result_data.messages.length; x++) {
     if(x == new_messages_index) {
       newMessagesBox();
     }
-    makeMessageBox(data.messages[x]);
+    makeMessageBox2(data.messages[x]);
   }
   scrollToBottom();
 }
-
+function newArr (oldArr) {
+  this.sender_email = oldArr.sender;
+  this.receiver_name = oldArr.receiver;
+  this.message = oldArr.message;
+  this.msg_time = oldArr.msg_date
+}
+/*
+  var order = {
+    my_id: user.uid,
+    my_email: user.uemail,
+    contact_number: contact_data.address_number,
+    contact_id: contact_data.contact_id,
+    contact_name: contact_data.contact_name,
+    contact_type: contact_data.contact_type,
+    order_length: order_length,
+    noti_n: noti_val,
+    messages: []
+  };
+*/
 function newMessagesBox () {
   var div_el = document.createElement("div");
   div_el.setAttribute('class', 'col-12 new-msgs-line');

@@ -1,24 +1,55 @@
-.counter-title {
-  background-color: #bbb;
-  color: black;
-  text-align: center;
-  border: 1px solid #999;
-  margin: 0;
-  padding-bottom: 10px;
+.title-part {
   height: 6vh;
 }
-.contact-div {
+.title-text {
+  height: 6vh;
+  margin: 0;
+  border: 1px solid #666;
+  
+  background-color: #666;
+  color: #fff;
+  
+  text-align: center;
+  font-style: italic;
+  letter-spacing: 5px;
+  text-shadow: 15px 15px 5px #fff;
+}
+.content-part {
+  height: 88vh;
+}
+.left-part {
   height: 88vh;
   background-color: #fff;
   position: relative;
 }
+.menu {
+  height: 8vh;
+}
+.ul-menu {
+  padding-left: 0;
+  margin: 0;
+  height: 100%;
+
+}
+.ul-menu li {
+  height: 100%;
+  display: inline;
+  border: 3px dotted #00d;
+  background-color: #22f;
+  padding: 3px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+}
+
+/* settings */
 .settings {
- position: fixed; 
- width: 30%;
- height: 88vh;
- top: 0;
- background-color: white;
- display: none;
+  position: absolute;
+  width: 100%;
+  height: 88vh;
+  background-color: white;
+  display: none;
 }
 .settings-top {
   position: relative;
@@ -80,14 +111,7 @@
   border: 1px solid #999;
   height: 6vh;
 }
-.menu {
-  height: 8vh;
-  border: 1px solid #999;
-}
-.contacts {
-  height: 80vh;
-  border: 1px solid #999;
-}
+
 
 .message-input {
   height: 8vh;
@@ -105,37 +129,23 @@ input[name=message_input] {
   height: 8vh;
   padding: 0;
 }
-.ul-menu li {
-  display: inline;
-}
-.div_contact {
-  height: 10vh;
-  border: 1px solid #999;
-  position: relative;
-}
-.a_contact {
-  position: absolute;
-  width: 100%; border: 1px solid blue;
-  height: 100%;
-  padding-top: 10px;
-  padding-left: 20px;
-  text-align: left;
-  cursor: pointer;
-
-}
 .self-box {
-  margin-left: 2%;
+  float: left;
+  width: 80%;
+
   margin-top: 2vh;
   padding: 2px;
   border: 1px solid #999;
   background-color: #fcf;
 }
 .msg-box {
-  margin-left: 15%;
+  float: right;
+  width:80%;
+
   margin-top: 2vh;
   padding: 2px;
   border: 1px solid #999;
-  background-color: #ffc;
+  background-color: #cfc;
 }
 .new-msgs-line {
   margin-top: 2vh;
@@ -154,7 +164,6 @@ input[name=message_input] {
   text-align: right;
   color: red;
 
-/*  padding: 10px; */
   border: 1px solid red;
 /*  visibility: hidden; */
 }
@@ -191,6 +200,7 @@ input[name=message_input] {
   top: 10vh;
   color: blue;
 }
+/* new group create page style */
 .new-contact {
   position: fixed;
   width: 100%;
@@ -219,19 +229,10 @@ input[name=message_input] {
 .form-parts {
   border: 5px solid #444;
 }
-.fparts-h {
-  margin-top: 10px;
+
+.new_g_parts {
+  float: left;
+  margin-top:30px;
   margin-left: 10px;
-  height: 8vh;
 }
-.fparts-i {
-  margin-top: 10px;
-  margin-left: 10px;
-  height: 8vh;
-}
-.fparts-b {
-  margin-top: 10px;
-  margin-left: 10px;
-  height: 8vh;
-  font-size: 1.5em;
-}
+

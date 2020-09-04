@@ -1,0 +1,41 @@
+.contacts {
+  height: 80vh;
+  border: 4px solid red;
+}
+.contact-div {
+  width: 100%;
+  height: 10vh;
+  border: 1px solid blue;
+}
+.contact-name {
+  border: 1px solid black;
+  height: 10vh;
+  text-align: left;
+  cursor: pointer;
+}
+.contact-msg-counter {
+  float: right;
+  padding: 5px;
+  background-color: #f00;
+  border: 1px solid #900;
+  color: #400;
+  border-radius: 5px;
+  text-align: center;
+  
+  /*visibility: hidden;*/
+}
+.contact-btn {
+  float: right;
+  border: 1px solid red;
+/*  display: none; */
+}
+
+
+
+.contact-msg-counter {
+  margin-left: 15%;
+  margin-top: 2vh;
+  padding: 2px;
+  border: 1px solid #999;
+  background-color: #ffc;
+}

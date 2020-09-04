@@ -5,7 +5,6 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #578;
 }
 
 .col-1 {width: 8.33%;}
@@ -30,7 +29,7 @@ body {
   clear: both;
   display: table;
 }
-/* I think here needs some change */
+
 .title {
   padding-top: 2%;
   padding-bottom: 2%;

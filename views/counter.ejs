@@ -6,34 +6,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/styles/style.css">
   <link rel="stylesheet" type="text/css" href="/styles/counter.css">
+  <link rel="stylesheet" type="text/css" href="/styles/contacts.css">
 </head>
 <body>
-  <div class="row">
-    <h3 id="title" class="col-12 counter-title">Get_Close</h3>
+  <div class="col-12 row title-part">
+    <h3 id="title" class="col-12 title-text">Get Close</h3>
   </div>
-  <div class="row">
-    <div class="col-4 contact-div">
+  <div class="col-12 row content-part">
+    <div class="col-4 left-part">
       <div class="col-12 menu">
         <ul class="col-12 ul-menu">
-          <li id="name_of_user" class="col-6"></li>
+          <li class="col-6" id="name_of_user" ></li>
           <li class="col-6" onclick="showSettings();">Settings</li>
         </ul>
       </div>
       <div class="col-12 contacts" id="contacts">
       </div>
       <!-- Settings Box -->
-      <div class="col-12 settings" id="settings">
-        <div class="settings-top">
+      <div class="settings" id="settings">
+        <div class="col-12 settings-top">
           <h2 class="settings-head">Settings</h2>
           <div class="settings-close" id="settings_close" 
             onclick="closeSettings();">close</div>
         </div>
-        <div class="col-12 settings-el" onclick="prepareRoom();">
-        Make New Group</div>
         <div class="col-12 settings-el" onclick="showNewContactPage();">
-        Add friend</div>
-      </div>
-      
+          Create New Group
+        </div>
+      </div>  
     </div>
     <div class="col-8 content-div">
       <div class="col-12 content-header" id="content_header">
@@ -71,17 +70,14 @@
       </div>
     </div>
     <div class="row col-12 newc-mdiv">
-      <div class="col-12 newc-mdiv-form" id="create_group_form">
-        <div class="row form-parts" >
-          <h2 class="col-2 fparts-h">GROUP NAME: 
-          </h2>
-          <input class="col-5 fparts-i" name="group-name" id="group_name"
-            type="text">
-          <button class="col-2 fparts-b" onclick="createNewGroup();">
-            Create Group
-          </button>
-        </div>
-      </div>
+      <h2 class="new_g_parts">
+        GROUP NAME: 
+      </h2>
+      <input class="new_g_parts" name="group-name" id="group_name"
+        type="text">
+      <button class="new_g_parts" onclick="createNewGroup();">
+        Create Group
+      </button>
     </div>
   </div>
   <script>
