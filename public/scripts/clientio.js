@@ -136,16 +136,19 @@ var address = {
 
 client.on('msg_result', function (data) {
   var msgs_length = parseInt(data.messages.length);
+  
   if(msgs_length === 0) {
     return false;
   }
-  var new_messages_index = msgs_length - parseInt(data.noti_n);
-  
+  layDownMessages(data);
+//  var new_messages_index = msgs_length - parseInt(data.noti_n);
+  /*
   if(msgs_length > parseInt(data.noti_n)) {
     layDownMessages(data, new_messages_index);
   } else {
     layDownMessages(data, 0);
   }
+  */
 });
 
 function prepareRoom() {
@@ -166,6 +169,51 @@ function createNewGroup () {
     }
     client.emit("create_group", data);
     closeNewContactPage();
+  } else {
+    return false;
+  }
+}
+
+function bringBackGroupData () {
+  var data = {
+    uid: user.uid,
+    uname: user.uname,
+    uemail: user.uemail,
+    g_number: address.address_number,
+    g_id: address.address_id,
+    g_name: address.name,
+    g_type: address.type
+  };
+  client.emit("group_data", data);
+}
+
+client.on('g_data', function (data) {
+  var row3_ul = getId('row3_ul');
+  row3_ul.innerHTML = "";
+  var res_length = data.contacts.length;
+  for(var x = 0; x < res_length; x++) {
+    var row3_li = document.createElement('li');
+    row3_li.innerText = data.contacts[x].email;
+    row3_ul.appendChild(row3_li);
+  }
+});
+/* add new member to a group */
+function addNewMember () {
+  var member_name = getId("member_name").value;
+  if(member_name != "") {
+    var data = {
+      uid: user.uid,
+      uname: user.uname,
+      uemail: user.uemail,
+      new_member: member_name,
+      g_number: address.address_number,
+      g_id: address.address_id,
+      g_name: address.name,
+      g_type: address.type
+    }
+    
+    client.emit("add_member", data);
+    closeDetails();
   } else {
     return false;
   }

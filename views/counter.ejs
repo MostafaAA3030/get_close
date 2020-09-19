@@ -4,9 +4,17 @@
   <meta charset="UTF8">
   <title>Get_Close</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/styles/style.css">
+  <link rel="stylesheet" type="text/css" href="/styles/style.css">
   <link rel="stylesheet" type="text/css" href="/styles/counter.css">
   <link rel="stylesheet" type="text/css" href="/styles/contacts.css">
+  <script>
+  var address = {
+    address_number: "",
+    address_id: "",
+    name: "",
+    type: ""
+  };
+  </script>
 </head>
 <body>
   <div class="col-12 row title-part">
@@ -35,7 +43,13 @@
       </div>  
     </div>
     <div class="col-8 content-div">
-      <div class="col-12 content-header" id="content_header">
+      <div class="col-12 content-header-part">
+        <div class="content-header" id="content_header">
+         .
+        </div>
+        <div class="content-header-details" onclick="openDetails();">
+          Details
+        </div>
       </div>
       <div id="message_place" class="col-12 message-div">
       </div>
@@ -47,6 +61,7 @@
           value="SEND">
         </form>
       </div>
+      <!-- This parts should be removed -->
       <div class="room" id="room">
         <div class="room-head">Room</div>
         <div class="room-close" onclick="closeRoom();">Close</div>
@@ -55,6 +70,7 @@
           create Room
         </button>
       </div>
+      <!-- must be -->
     </div>
   </div>
   <div class="row">
@@ -80,6 +96,31 @@
       </button>
     </div>
   </div>
+  <!-- details page -->
+  <div id="details_page" class="details-page">
+  <!--
+    <div id="details_row1" class="row col-12 parts">
+      <h1 class="details-title">Details</h1>
+      <div class="details-close" onclick="closeDetails();">Close</div>
+    </div>
+    <div id="details_row2" class="row col-12 parts">
+      <h2 class="member-part">
+        New Member: 
+      </h2>
+      <input class="new-member" name="member_name" id="member_name"
+        type="text">
+      <button class="new-member-btn" onclick="addNewMember();">
+        Add Member
+      </button>
+    </div>
+    <div class="row col-12 parts" id="contact_details">
+      Contact_details
+    </div>
+  -->
+  </div>
+<!--
+Another option might be to make an AJAX call back to the server once the page has already loaded, return the gameState JSON, and set clientGameState to the JSON response.
+-->  
   <script>
   /*
     asks username ...
@@ -106,10 +147,7 @@
     }
     */
   </script>
-<!--
-Another option might be to make an AJAX call back to the server once the page has already loaded, return the gameState JSON, and set clientGameState to the JSON response.
--->  
-  <script src="/scripts/helper.js"></script>
+  <script src="/scripts/helper.js"></script>  
   <script src="/socket.io/socket.io.js"></script>
   <script src="/scripts/clientio.js"></script>
 </body>

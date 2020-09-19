@@ -3,11 +3,11 @@ const jwt = require('jsonwebtoken');
 
 const router = express.Router();
 
-router.get('/counter', authenticateToken, (req, res) => { // 
+router.get('/counter', authenticateToken, (req, res) => { 
   
   var data = {
-    uid: req.user.user_id, // 1, //
-    uemail: req.user.email // 'q@q.com' //
+    uid: req.user.user_id, //  1, // 
+    uemail: req.user.email // 'q@q.com' //   
   };
   console.log("data is: ");
   console.log(data);
@@ -58,7 +58,7 @@ function authenticateToken (req, res, next) {
 }
 
 /* Routes */
-router.get('/', authenticateToken, (req, res) => {
+router.get('/', authenticateToken, (req, res) => { 
   console.log("cookies in server-b: ");
   console.log(req.cookies);
   console.log("req.user is: ");

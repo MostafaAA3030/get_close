@@ -4,13 +4,6 @@ var name_of_user = getId("name_of_user");
 var content_header = getId("content_header");
 var contacts = getId("contacts");
 
-var address = {
-  address_number: "",
-  address_id: "",
-  name: "",
-  type: ""
-};
-
 function getId(id) {
   return document.getElementById(id);
 }
@@ -213,7 +206,7 @@ var msg = {
         msg_time: msg_time
       };
 */
-function layDownMessages (data, new_messages_index) {
+function layDownMessages (data) { // , new_messages_index
   var result_data = {
     sender_id: data.sender_id,
     sender_email: data.sender_email,
@@ -225,8 +218,12 @@ function layDownMessages (data, new_messages_index) {
     noti_n: data.noti_n,
     messages: data.messages
   };
-  for(var x = 0; x < result_data.messages.length; x++) {
-    if(x == new_messages_index) {
+  
+  var messages_l = parseInt(result_data.messages.length) - 1;
+  var new_messages_index = parseInt(result_data.noti_n);
+  for(var x = messages_l; x >= 0; x--) {
+    
+    if(x == new_messages_index - 1) {
       newMessagesBox();
     }
     makeMessageBox2(data.messages[x]);
@@ -276,6 +273,88 @@ function showSettings() {
 
 function closeSettings () {
   var settings_el = getId("settings");
+  settings_el.style.display = "none";
+}
+
+function openDetails() {
+  var settings_el = getId("details_page");
+  settings_el.style.display = "block";
+  
+  var details_page = getId("details_page");
+  details_page.setAttribute('class', 'details-page');
+  details_page.innerHTML = "";
+
+  var row1 = document.createElement('div');
+  row1.setAttribute('id', 'details_row1');
+  row1.setAttribute('class', 'row col-12 parts');
+  details_page.appendChild(row1);
+  
+  var row1_title = document.createElement('h1');
+  row1_title.setAttribute('class', 'details-title');
+  row1_title.innerText = "Details";
+  row1.appendChild(row1_title);
+  
+  var row1_close = document.createElement('div');
+  row1_close.setAttribute('class', 'details-close');
+  row1_close.setAttribute('onclick', 'closeDetails()');
+  row1_close.innerText = "Close";
+  row1.appendChild(row1_close);
+  
+  var row2 = document.createElement("div");
+  row2.setAttribute('id', 'details_row2');
+  row2.setAttribute('class', 'row col-12 parts');
+  details_page.appendChild(row2);
+  
+  if(address.type == 1) {
+    var row3 = document.createElement('div');
+    row3.setAttribute('class', 'row col-12 parts');
+    details_page.appendChild(row3);
+    row3.innerHTML = "";
+    
+    var row3_ul = document.createElement('ul');
+    row3.appendChild(row3_ul);
+    
+    var row3_ul_li = document.createElement('li');
+    row3_ul_li.innerText = address.name;
+    row3_ul.appendChild(row3_ul_li);
+    
+  } else if (address.type == 2) {
+    var row2_h1 = document.createElement("h1");
+    row2_h1.setAttribute('class', 'member-part');
+    row2_h1.innerText = "New Member: ";
+    row2.appendChild(row2_h1);
+      
+    var row2_input = document.createElement('input');
+    row2_input.setAttribute('class', 'new-member');
+    row2_input.setAttribute('name', 'member_name');
+    row2_input.setAttribute('id', 'member_name');
+    row2_input.setAttribute('type', 'text');
+    row2.appendChild(row2_input);
+    
+    var row2_btn = document.createElement('button');
+    row2_btn.setAttribute('class', 'new-member-btn');
+    row2_btn.setAttribute('onclick', 'addNewMember()');
+    row2_btn.innerText = "Add Member";
+    row2.appendChild(row2_btn);
+    
+    var row3 = document.createElement('div');
+    row3.setAttribute('class', 'row col-12 parts');
+    row3.setAttribute('id', 'row3_part');
+    details_page.appendChild(row3);
+    row3.innerHTML = "";
+    
+    var row3_ul = document.createElement('ul');
+    row3_ul.setAttribute('id', 'row3_ul');
+    row3.appendChild(row3_ul);
+    
+    bringBackGroupData();
+  } else {    
+    return false;
+  }
+}
+
+function closeDetails() {
+  var settings_el = getId("details_page");
   settings_el.style.display = "none";
 }
 
