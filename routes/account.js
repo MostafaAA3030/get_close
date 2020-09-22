@@ -12,7 +12,7 @@ function authenticateToken (req, res, next) {
   console.log(hToken);
 
   if(!hToken) {
-    var cookies = req.cookies; 
+    var cookies = req.cookies;
     // Get the visitor name set in the cookie
     var token = cookies.AJWT;
     
@@ -26,13 +26,13 @@ function authenticateToken (req, res, next) {
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
     if(err) {
       console.log(err);
-      return res.send("Forbidden");
+      return res.redirect("http://localhost:5000/users/checktoken");
     }
     console.log("User in authenticateToken middleware: ");
     console.log(user);
-    req.user = user
+    req.user = user;
     next();
-  })
+  });
 }
 
 router.get('/home', authenticateToken, (req, res) => {
@@ -43,11 +43,12 @@ router.get('/home', authenticateToken, (req, res) => {
   console.log("req.cookies in /home");
   console.log(req.cookies);
   res.render('home.ejs', {
-    name: req.user.name,
+    name: req.user.user_id, // req.user.name,
     email: req.user.email
   });
 });
 
+/* This is out of program and must deleted later and index.ejs */
 router.get('/', (req, res) => {
   res.render('index.ejs');
 });

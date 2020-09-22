@@ -3,7 +3,7 @@ const client = io();
 client.on('connect', function () {
   client.emit('start_up', {
     uid: user.uid,
-    uname: user.uname,
+//    uname: user.uname,
     uemail: user.uemail
   });
 });

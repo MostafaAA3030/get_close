@@ -27,6 +27,7 @@ app.use(cookieParser()); // cookieParser make req.cookies
 app.use('/users', usersRouter);
 app.use('/account', accountRouter);
 
+
 app.get('/clearc', (req, res) => {
   res.clearCookie('AJWT');
   res.end('cookie deleted');

@@ -36,9 +36,9 @@ function authenticateToken (req, res, next) {
   console.log("token variable");
   console.log(token);
   if(token == null) {
-    return res.send("Forbidden Page.");
+    console.log("Forbidden Page.. There is no cookie access token");
     // return res.render('forbidden.ejs');
-//    return res.redirect('http://localhost:5000/users/checktoken');
+    return res.redirect('http://localhost:5000/users/checktoken');
   }
    
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {

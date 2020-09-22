@@ -141,7 +141,7 @@ router.post('/register-email',  [
 
 router.get('/login', (req, res) => {
   console.log("get - /login - cookies in req: ");
-  console.log(req.cookies)
+  console.log(req.cookies);
   res.render('login.ejs');
 });
 
@@ -163,12 +163,12 @@ router.post('/login', (req, res) => { // async , this was not necessary ...
           db.writes("INSERT INTO tokens (ref_token) VALUES (?)",
           [refreshToken])
           .then(result => {
-            var acLifeTime = 10 * 60 * 1000;
+            var acLifeTime = 60 * 1000;
             res.cookie('AJWT', accessToken, {
               maxAge: acLifeTime,
               httpOnly: true
             });
-            var rcLifeTime = 24 * 60 * 60 * 1000;
+            var rcLifeTime = 5 * 60 * 1000;
             res.cookie('RJWT', refreshToken, {
               maxAge: rcLifeTime,
               path: '/users',
@@ -219,65 +219,275 @@ router.post('/login', (req, res) => { // async , this was not necessary ...
 });
 
 router.get('/checktoken', (req, res) => {
-  console.log("authServer - GET - /checktoken");
-  console.log("req cookies: ");
-  console.log(req.cookies);
+  console.log("authServer: GET - users/checktoken");
   
   var cookies = req.cookies;
+
+  console.log("req cookies: ");
+  console.log(cookies);
   
-  if(cookies.AJWT == undefined && cookies.RJWT == undefined) {
-    console.log("There is neither AJWT nor RJWT");
-  
-    return res.redirect('http://localhost:5000/users/login');
-  } else if(cookies.AJWT == undefined && cookies.RJWT != undefined){
-    console.log("There is not AJWT, but RJWT");
-    
-    const refreshToken = cookies.RJWT;
-    db.reads("SELECT ref_token From tokens WHERE ref_token = ?", [
-      refreshToken
-    ])
-    .then(function(result) {
-      console.log(result[0]);
-      if(result[0]) {
-        console.log("refresh token found in database:");
-        console.log(result[0].ref_token);
-        jwt.verifyRefreshToken(refreshToken, function (err, user) {
-          if(err) return res.sendStatus(403);
-          console.log("verified refreshtoken result, user:");
-          console.log(user);
-          
-          var user_obj = {
-            name: user.name,
-            email: user.email
-          }
-          
-          var accessToken = jwt.generateAccessToken(user_obj);
-          console.log("NEW ACCESS TOKEN: ");
-          console.log(accessToken);
-          var acLifeTime = 10 * 60 * 1000;
-          res.cookie('AJWT', accessToken, {
-                maxAge: acLifeTime,
-                httpOnly: true
+  if(cookies.AJWT != undefined) {
+    /*
+    There is AJWT COOKIE
+    so go check its validation
+    */
+    var access_token = cookies.AJWT;
+    jwt.verifyAccessToken(access_token, function(err, user) {
+      if(err) {
+        console.log(err);
+        /*
+        There is a problem in access Token
+        if the problem is because of expiration
+        give new one if RJWT is OK
+        if not go to login
+        */
+        console.log("There is an error in access token sent in cookie");
+        if(err.name ='TokenExpiredError') {
+          console.log("access token is expired");
+          if(cookies.RJWT != undefined) {
+          /*
+          Access token is expired
+          refresh token Cookie exists
+          go check
+          */
+            var refresh_token = cookies.RJWT;
+            jwt.verifyRefreshToken(refresh_token, function(err, user) {
+              if(err) {
+                /*
+                refresh token does not work
+                */
+                return res.redirect('http://localhost:5000/users/login');
+              }
+              db.reads("SELECT ref_token From tokens WHERE ref_token = ?", [
+                refreshToken
+              ])
+              .then(function(result) {
+                console.log(result[0]);
+                if(result[0]) {
+                  console.log("refresh token found in database:");
+                  console.log(result[0].ref_token);
+                    
+                  var user_obj = {
+                    user_id: user.user_id,
+                    email: user.email
+                  }
+                
+                  var accessToken = jwt.generateAccessToken(user_obj);
+                  console.log("NEW ACCESS TOKEN: ");
+                  console.log(accessToken);
+                  var acLifeTime = 60 * 1000;
+                  res.cookie('AJWT', accessToken, {
+                    maxAge: acLifeTime,
+                    httpOnly: true
+                  });
+                
+                  var newRefreshToken = jwt.generateRefreshToken(user_obj);
+                  db.writes("UPDATE tokens SET ref_token = ? WHERE ref_token = ?", [
+                    newRefreshToken,
+                    refreshToken
+                  ])
+                  .then(function(result2) {
+                    var rcLifeTime = 5 * 60 * 1000;
+                    res.cookie('RJWT', newRefreshToken, {
+                      maxAge: rcLifeTime,
+                      path: '/users',
+                      httpOnly: true,
+                      sameSite: 'strict'
+                    });
+              
+                    return res.redirect('http://localhost:4000/counter');
+                  })
+                  .catch(function(err) {
+                    console.log(err);
+                  });
+                } else {
+                  return res.redirect('http://localhost:5000/users/login');
+                }
+              }) //
+              .catch(function(err) {
+                console.log(err);
               });
-          var res_obj = {
-            status: 'OK'
-          };
-          res_obj = JSON.stringify(res_obj);
-          return res.redirect('http://localhost:4000/');
+            }); // 2
+          } else {
+            return res.redirect('http://localhost:5000/users/login');
+          }
+        } else {
+          return res.send("Forbidden Page / not authorized");
+        }
+      } // 3
+    });
+  } else {
+  /*
+    Here we don't have AJWT COOKIE
+    so we check to see if the RJWT exists
+    because if lives longer
+  */
+    if(cookies.RJWT != undefined) {
+      var refresh_token = cookies.RJWT;
+      
+      jwt.verifyRefreshToken(refresh_token, function (err, user) {
+        if(err) {
+          /*
+          There is a problem with refresh token or expired
+          */
+          console.log("Error in refresh token validity");
+          console.log(err);
+        }
+        /*
+        There is no problem with RJWT
+        so we check to see if it is in database
+        */
+        db.reads("SELECT ref_token From tokens WHERE ref_token = ?", [
+          refresh_token
+        ])
+        .then(function(result) {
+          console.log(result[0]);
+          if(result[0]) {
+            /*
+            Refresh Token is in database
+            */
+            console.log("refresh token found in database:");
+            console.log(result[0].ref_token);
+            
+            var user_obj = {
+              user_id: user.user_id,
+              email: user.email
+            }
+            
+            var newAccessToken = jwt.generateAccessToken(user_obj);
+            console.log("NEW ACCESS TOKEN: ");
+            console.log(newAccessToken);
+            var acLifeTime = 60 * 1000;
+            res.cookie('AJWT', newAccessToken, {
+              maxAge: acLifeTime,
+              httpOnly: true
+            });
+            
+            var newRefreshToken = jwt.generateRefreshToken(user_obj);
+            db.writes("UPDATE tokens SET ref_token = ? WHERE ref_token = ?", [
+              newRefreshToken,
+              refresh_token
+            ])
+            .then(function(result2) {
+              var rcLifeTime = 2 * 60 * 1000;
+              res.cookie('RJWT', newRefreshToken, {
+                maxAge: rcLifeTime,
+                path: '/users',
+                httpOnly: true,
+                sameSite: 'strict'
+              });
+              return res.redirect('http://localhost:4000/counter');
+            })
+            .catch(function(err) {
+              return console.log(err);
+            });
+            
+          } else {
+          /*
+          Refresh Token is not in database
+          */
+            res.redirect('http://localhost:5000/users/login');
+          }
         })
-      } else {
-        var res_obj = {
-          status: 'error'
-        };
-        res_obj = JSON.stringify(res_obj);
-        res.send(res_obj);
-      }
-    })
-    .catch(function(err) {
-      console.log(err);
-      res.sendStatus(403);
-    })
-  }  
+        .catch(function (err) {
+          return console.log(err);
+        })
+      });
+    } else {
+      /*
+      Here we don't have AJWT nor RJWT
+      so redirect to login page
+      */
+      return res.redirect('http://localhost:5000/users/login');
+    }
+  } 
 });
 
+function goCheckRefToken (refresh_token, callback) {
+  db.reads("SELECT ref_token From tokens WHERE ref_token = ?", [
+    refresh_token
+  ])
+  .then(function(result) {
+    console.log(result[0]);
+    if(result[0]) {
+      callback(null, result[0]);
+    } else {
+      callback("The ref Token does not exist...", false);
+    }
+  })
+  .catch(function(err) {
+    console.log(err);
+    res.sendStatus(403);
+  })
+}
+function setNewTokens (result, user, res) {
+  console.log("refresh token found in database:");
+  console.log(result.ref_token);
+  var user_obj = {
+    user_id: user.user_id,
+    email: user.email
+  }
+        
+  var accessToken = jwt.generateAccessToken(user_obj);
+  console.log("NEW ACCESS TOKEN: ");
+  console.log(accessToken);
+  var acLifeTime = 60 * 1000;
+  res.cookie('AJWT', accessToken, {
+    maxAge: acLifeTime,
+    httpOnly: true
+  });
+        
+  var newRefreshToken = jwt.generateRefreshToken(user_obj);
+  db.writes("UPDATE tokens SET ref_token = ? WHERE ref_token = ?", [
+    newRefreshToken,
+    refreshToken
+  ])
+  .then(function(result2) {
+    var rcLifeTime = 2 * 60 * 60 * 1000;
+    res.cookie('RJWT', newRefreshToken, {
+      maxAge: rcLifeTime,
+      path: '/users',
+      httpOnly: true,
+      sameSite: 'strict'
+    });
+    
+    return res.redirect('http://localhost:4000/counter');
+  })
+  .catch(function(err) {
+    console.log(err);
+  });
+}
+function setTokens (token_data) {
+  var newAccessToken = jwt.generateAccessToken(token_data);
+  var newRefreshToken = jwt.generateRefreshToken(token_data);
+}
+function setTokenCookies (access_token, refresh_token) {
+  var acLifeTime = 60 * 1000;
+  res.cookie('AJWT', access_token, {
+    maxAge: acLifeTime,
+    httpOnly: true
+  });
+  var rcLifeTime = 2 * 60 * 60 * 1000;
+  res.cookie('RJWT', newRefreshToken, {
+    maxAge: rcLifeTime,
+    path: '/users',
+    httpOnly: true,
+    sameSite: 'strict'
+  });
+}
+function updateRefreshToken (new_ref_token, ref_token) {
+  db.writes("UPDATE tokens SET ref_token = ? WHERE ref_token = ?", [
+    new_ref_token,
+    ref_token
+  ])
+  .then(function(result) {
+    return res.redirect('http://localhost:4000/counter');
+  })
+  .catch(function(err) {
+    console.log(err);
+  });
+}
+function redirectTo (req, res, next) {
+  res.redirect(address);
+}
 module.exports = router;
